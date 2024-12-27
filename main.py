@@ -19,12 +19,12 @@ async def home():
 	return "HELLO"
 
 
-@app.get("/get_all_users", deprecated=True)
+@app.get("/get_all_users")
 async def get_all_users():
 	return DB.fetch_all_users()
 
 
-@app.get("/get_user_by_username", deprecated=True)
+@app.get("/get_user_by_username")
 async def get_user_by_username(name: str):
 	return DB.fetch_user_by_username(name)
 
