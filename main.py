@@ -114,6 +114,7 @@ async def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
 		data={"sub": user.username}, expires_delta=access_token_expires
 	)
 	return {
+		"status": "Login Successful",
 		"user": user,
 		"token": Token(access_token=access_token, token_type="bearer")
 	}
@@ -139,6 +140,7 @@ async def register(
 		data={"sub": user_dict["username"]}, expires_delta=access_token_expires
 	)
 	return {
+		"status": "User Created Successfully",
 		"new_user": new_user_from_db,  # FastAPI will automatically handle the conversion to UserOut
 		"token": Token(access_token=access_token, token_type="bearer")
 	}
