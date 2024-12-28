@@ -3,6 +3,7 @@ from typing import Annotated
 
 import jwt
 from fastapi import Depends, FastAPI, HTTPException, status, Form
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jwt.exceptions import InvalidTokenError
 from passlib.context import CryptContext
@@ -10,8 +11,19 @@ from pydantic import BaseModel
 
 from database import DBHelper, User
 
+
 app = FastAPI()
 DB = DBHelper()
+
+
+
+app.add_middleware(
+	CORSMiddleware,
+	allow_origins=["*"],
+	allow_credentials=True,
+	allow_methods=["*"],
+	allow_headers=["*"],
+)
 
 
 @app.get("/")
