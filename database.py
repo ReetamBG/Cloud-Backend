@@ -20,7 +20,7 @@ class User(Base):
 
 
 class DBHelper:
-	DATABASE_URL = "postgresql://postgres:6l1tch N1nj4@db.hondyywerwiuintsgjkw.supabase.co:5432/postgres"
+	DATABASE_URL = "postgresql://ree:fWC9JkeNvMtFA26nmXX04TaBoTQzQHr2@dpg-ctnb3htumphs73c4qbeg-a.singapore-postgres.render.com/trekathon"
 
 	def __init__(self):
 		self.engine = create_engine(self.DATABASE_URL)
