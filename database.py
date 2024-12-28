@@ -1,5 +1,6 @@
 from sqlalchemy import create_engine, Column, Integer, String
 from sqlalchemy.orm import sessionmaker, declarative_base
+from sqlalchemy.exc import IntegrityError
 from fastapi import HTTPException, status
 
 
@@ -52,8 +53,22 @@ class DBHelper:
 			self.session.commit()
 			self.session.refresh(new_user)  # Refresh to get latest data (e.g., auto-generated ID)
 			print("User registered successfully", new_user)
-			return new_user  # Return SQLAlchemy model object
+			return new_user
+
+		# Handle exceptions
+		except IntegrityError as e:
+			self.session.rollback()
+			if 'users_email_key' in str(e.orig):  # Check if the error is related to the unique constraint on email
+				raise HTTPException(status.HTTP_400_BAD_REQUEST, detail="Email is already registered")
+			elif 'users_username_key' in str(e.orig):  # Check if the error is related to the unique constraint on username
+				raise HTTPException(status.HTTP_400_BAD_REQUEST, detail="Username is already taken")
+			else:
+				# General error message for any other issues
+				raise HTTPException(status.HTTP_400_BAD_REQUEST, detail=f"Failed to create User. Error: {e}")
+
+		# For handling any other exceptions
 		except Exception as e:
+			self.session.rollback()
 			print(e)
-			raise HTTPException(status.HTTP_400_BAD_REQUEST, detail="Failed to create User")
+			raise HTTPException(status.HTTP_400_BAD_REQUEST, detail=f"Failed to create User. Error: {e}")
 
