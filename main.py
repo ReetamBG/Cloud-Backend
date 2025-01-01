@@ -16,10 +16,14 @@ app = FastAPI()
 DB = DBHelper()
 
 
+origins = [
+	"https://grand-figolla-f1d11d.netlify.app",
+	"http://localhost:3000"
+]
 
 app.add_middleware(
 	CORSMiddleware,
-	allow_origins=["https://grand-figolla-f1d11d.netlify.app"],
+	allow_origins=origins,
 	# allow_origin_regex=r"http://localhost:\d+",
 	allow_credentials=True,
 	allow_methods=["*"],
