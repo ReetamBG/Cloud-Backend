@@ -19,7 +19,7 @@ DB = DBHelper()
 
 app.add_middleware(
 	CORSMiddleware,
-	allow_origins=["http://localhost:3000"],
+	allow_origins=["https://grand-figolla-f1d11d.netlify.app"],
 	# allow_origin_regex=r"http://localhost:\d+",
 	allow_credentials=True,
 	allow_methods=["*"],
